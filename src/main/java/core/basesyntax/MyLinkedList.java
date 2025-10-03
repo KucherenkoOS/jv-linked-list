@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     private static class Node<T> {
-        T value;
-        Node<T> prev;
-        Node<T> next;
+        private T value;
+        private Node<T> prev;
+        private Node<T> next;
 
         Node(T value, Node<T> prev, Node<T> next) {
             this.value = value;
@@ -117,12 +117,15 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
 
         if (index < size / 2) {
             current = head;
-            for (int i = 0; i < index; i++) current = current.next;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
         } else {
             current = tail;
-            for (int i = size - 1; i > index; i--) current = current.prev;
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+            }
         }
-
         return current;
     }
 
@@ -131,11 +134,17 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
         Node<T> prev = node.prev;
         Node<T> next = node.next;
 
-        if (prev != null) prev.next = next;
-        else head = next;
+        if (prev != null) {
+            prev.next = next;
+        } else {
+            head = next;
+        }
 
-        if (next != null) next.prev = prev;
-        else tail = prev;
+        if (next != null) {
+            next.prev = prev;
+        } else {
+            tail = prev;
+        }
 
         size--;
         return value;
@@ -148,7 +157,7 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     }
 
     private void checkPositionIndex(int index) {
-        if (index < 0 || index > size) { // allow index == size for add
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
     }
